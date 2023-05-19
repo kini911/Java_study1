@@ -26,7 +26,7 @@ public class StudentDAO extends DAO{
 		
 		try {
 			conn();
-			String sql = "SELECT * FROM student";
+			String sql = "SELECT * FROM student ORDER BY 1";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -133,7 +133,33 @@ public class StudentDAO extends DAO{
 		return result;
 	}
 	
-	
+	//전공별 성적 합계 및 평균
+	public List<Student>getAnalyze(){
+		List<Student>list = new ArrayList<>();
+		Student std = null;
+		try {
+			conn();
+			String sql = "SELECT std_major, sum(std_point) total, avg(std_point)\r\n"
+					+ "FROM student\r\n"
+					+ "GROUP BY std_major";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				std = new Student();
+				std.setStdMajor(rs.getString("std_major"));
+				std.setSum(rs.getDouble("total"));
+				//DB에 나오는 칼럼이름을 사용해야함(별칭이 있을 경우 별칭을 사용)
+				std.setAvg(rs.getDouble("avg(std_point)"));
+				list.add(std);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return list;
+	}
 	
 	
 	

@@ -1,4 +1,4 @@
-package exe;
+package com.yedam.exe;
 
 import java.util.Scanner;
 
@@ -35,13 +35,16 @@ public class ExeApp {
 				ss.updateStudent();
 				break;
 			case "6":
+				ss.getAnalyze();
 				break;
 			case "7":
+				System.out.println("end of program");
 				break;
 			}
 		}
 	}
-
+	
+	//분석 -> 전공별 성적 합계 및 성적 평적 -> 그룹함수 사용
 	private void menu() {
 		System.out.println("1.전체 학생 조회 | 2. 학번 조회 | 3. 학생 등록 | 4. 학생 정보 삭제 | 5. 전공 변경 | 6. 분석 | 7. 종료");
 		System.out.println("메뉴번호 입력>");
